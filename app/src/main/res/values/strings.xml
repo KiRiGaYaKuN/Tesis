@@ -11,4 +11,6 @@
     <string name="ejr2">Cual es la nota</string>
 
     <string name="scan1">Introdusca la etiqueta</string>
+
+    <string name="texto">Bienvenido a Musican, esta es una aplicación móvil que te ayudara en el aprendizaje de la musicografía braille a través de un pack de tarjetas que contendrán las notas musicales o partituras en braille. Estas tendrán una marca en la parte superior izquierda para posicionar correctamente la orientación de la tarjeta. En el menú podrás encontrar dos opciones: Escanear y Ejercicios. En el apartado de ejercicios encontraras actividades para fortalecer tus conocimientos de las notas musicales base y en el apartado de Escáner podrás acercar las tarjetas para reproducir su contenido y leer paralelamente la nota o partitura que se encuentra en la tarjeta. Disfruta de tu experiencia en Musican.</string>
 </resources>

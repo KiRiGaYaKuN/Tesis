@@ -45,6 +45,7 @@ public class Reproductor extends AppCompatActivity {
             case "Nota Re":
                 vectormp[0] = MediaPlayer.create(this, R.raw.re);
                 vectormp[0].start();
+
                 break;
             case "estrellita":
                 vectormp[0] = MediaPlayer.create(this, R.raw.estrellita);

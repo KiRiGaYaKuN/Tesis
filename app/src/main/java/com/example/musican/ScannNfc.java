@@ -37,8 +37,6 @@ public class ScannNfc extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scann_nfc);
 
-        mTextView = (TextView) findViewById(R.id.ver);
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null) {
