@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Musican</string>
+
+    <string name="Titulo">MUSICAN</string>
+
+    <string name="tuto">Tutorial</string>
+    <string name="scan">Scannear</string>
+    <string name="ejr">Ejercicios</string>
+
+    <string name="ejr1">Ingresa la nota</string>
+    <string name="ejr2">Cual es la nota</string>
+
+    <string name="scan1">Introdusca la etiqueta</string>
+</resources>
