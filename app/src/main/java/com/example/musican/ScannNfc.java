@@ -46,11 +46,6 @@ public class ScannNfc extends AppCompatActivity {
 
         }
 
-        if (!mNfcAdapter.isEnabled()) {
-            mTextView.setText("Active el NFC");
-        } else {
-            mTextView.setText(R.string.scan1);
-        }
 
         handleIntent(getIntent());
     }
