@@ -2,14 +2,10 @@ package com.example.musican;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -19,21 +15,28 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ScannNfc extends AppCompatActivity {
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Locale;
 
+public class Ejercicio21 extends AppCompatActivity {
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
-
+    private int seconds = 10;
+    private boolean running = false;
+    private String res = "";
     private NfcAdapter mNfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scann_nfc);
+        setContentView(R.layout.activity_ejercicio21);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -42,6 +45,7 @@ public class ScannNfc extends AppCompatActivity {
             finish();
             return;
         }
+        runTimer();
         handleIntent(getIntent());
     }
 
@@ -75,7 +79,7 @@ public class ScannNfc extends AppCompatActivity {
             if (MIME_TEXT_PLAIN.equals(type)) {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                new NdefReaderTask().execute(tag);
+                new Ejercicio21.NdefReaderTask().execute(tag);
 
             } else {
                 Log.d(TAG, "Wrong mime type: " + type);
@@ -88,7 +92,7 @@ public class ScannNfc extends AppCompatActivity {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    new NdefReaderTask().execute(tag);
+                    new Ejercicio21.NdefReaderTask().execute(tag);
                     break;
                 }
             }
@@ -110,7 +114,7 @@ public class ScannNfc extends AppCompatActivity {
         filters[0].addCategory(Intent.CATEGORY_DEFAULT);
         try {
             filters[0].addDataType(MIME_TEXT_PLAIN);
-        } catch (MalformedMimeTypeException e) {
+        } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("Check your mime type.");
         }
 
@@ -163,11 +167,56 @@ public class ScannNfc extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
 
-                Intent i = new Intent(ScannNfc.this, Reproductor.class);
-                i.putExtra(Reproductor.EXTRA_MESSAGE, result);
-                startActivity(i);
+                ImageView im = (ImageView) findViewById(R.id.imageView);
+                TextView er = (TextView) findViewById(R.id.textView2);
+                TextView ms = (TextView) findViewById(R.id.textView3);
+
+                String[] parte = result.split(",");
+                if (parte[0].equals("Partitura")){
+                    er.setText("Partitura escojida " + parte[1]);
+                    im.setVisibility(View.INVISIBLE);
+                    ms.setVisibility(View.VISIBLE);
+                    running = true;
+                    res = result;
+                }
+                else{
+                    er.setText("Acerque otra tarjeta por detras del celular");
+
+                }
+
             }
         }
 
     }
+
+    private void runTimer(){
+
+        TextView timeView =(TextView) findViewById(R.id.contador);
+        //Declarar un handles
+        Handler handler = new Handler();
+        //Invocar metodo post e instanciar runnable
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int secs = seconds%60;
+                String time = String.format(Locale.getDefault(),"%d",secs);
+
+                if(seconds <= 3 & seconds >= 1){
+                    timeView.setText(time);
+                }
+
+                if(seconds == 0){
+                    Intent i = new Intent(Ejercicio21.this, CualNota.class);
+                    i.putExtra(Reproductor.EXTRA_MESSAGE, res);
+                    startActivity(i);
+                }
+
+                if(running)
+                    seconds --;
+
+                handler.postDelayed(this,1000);
+            }
+        });
+    }
+
 }

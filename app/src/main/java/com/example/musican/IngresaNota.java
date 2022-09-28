@@ -2,14 +2,10 @@ package com.example.musican;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -19,30 +15,43 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class ScannNfc extends AppCompatActivity {
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
 
+public class IngresaNota extends AppCompatActivity {
+
+    private int seconds = 60;
+    private boolean running = true;
+    private boolean delay = false;
+    private int puntos = 0;
+    private int errores = 0;
+    TextView nota;
+    TextView puntuacion;
+    ImageView er;
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
 
+    public String[] notas = {"Do","Re","Mi","Fa","Sol","La","Si"};
     private NfcAdapter mNfcAdapter;
-
+    Random aleatorio = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scann_nfc);
+        setContentView(R.layout.activity_ingresa_nota);
 
+        int x = aleatorio.nextInt(7);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        if (mNfcAdapter == null) {
-            Toast.makeText(this, "El dispositivo no cuenta con NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+        runTimer();
         handleIntent(getIntent());
+        nota = (TextView) findViewById(R.id.nota);
+        nota.setText(notas[x]);
     }
 
     @Override
@@ -75,7 +84,7 @@ public class ScannNfc extends AppCompatActivity {
             if (MIME_TEXT_PLAIN.equals(type)) {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                new NdefReaderTask().execute(tag);
+                new IngresaNota.NdefReaderTask().execute(tag);
 
             } else {
                 Log.d(TAG, "Wrong mime type: " + type);
@@ -88,13 +97,12 @@ public class ScannNfc extends AppCompatActivity {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    new NdefReaderTask().execute(tag);
+                    new IngresaNota.NdefReaderTask().execute(tag);
                     break;
                 }
             }
         }
     }
-
 
     public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
@@ -110,7 +118,7 @@ public class ScannNfc extends AppCompatActivity {
         filters[0].addCategory(Intent.CATEGORY_DEFAULT);
         try {
             filters[0].addDataType(MIME_TEXT_PLAIN);
-        } catch (MalformedMimeTypeException e) {
+        } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("Check your mime type.");
         }
 
@@ -163,11 +171,83 @@ public class ScannNfc extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
 
-                Intent i = new Intent(ScannNfc.this, Reproductor.class);
-                i.putExtra(Reproductor.EXTRA_MESSAGE, result);
-                startActivity(i);
+                nota = (TextView) findViewById(R.id.nota);
+                puntuacion = (TextView) findViewById(R.id.puntos);
+                String[] parte = result.split(",");
+              if (parte[1].equals(nota.getText().toString())){
+                    puntos ++;
+                    int x = aleatorio.nextInt(7);
+                    nota.setText(notas[x]);
+                    puntuacion.setText("Puntos " + puntos);
+                }else{
+                    errores ++;
+                    if (errores == 1){
+                        er = (ImageView) findViewById(R.id.er1);
+                        er.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        if (errores == 2){
+                            er = (ImageView) findViewById(R.id.er2);
+                            er.setVisibility(View.VISIBLE);
+                        }else{
+                            if (errores == 3){
+                                er = (ImageView) findViewById(R.id.er3);
+                                er.setVisibility(View.VISIBLE);
+                                delay = true;
+                            }
+                        }
+
+                    }
+
+                }
+
             }
         }
 
     }
+
+
+    private void runTimer(){
+
+        TextView timeView =(TextView) findViewById(R.id.time);
+
+        //Declarar un handles
+        Handler handler = new Handler();
+        //Invocar metodo post e instanciar runnable
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if(delay){
+                    seconds = 0;
+                    delay = false;
+                }
+
+                int sec = seconds;
+                String time = String.format(Locale.getDefault(),"%d",seconds);
+
+                if(seconds > 0){
+                    timeView.setText(time);
+                    handler.postDelayed(this,1000);
+                }
+
+                if(seconds == -1){
+                    Intent i = new Intent(IngresaNota.this, Resultados.class);
+                    String res = "" + puntos;
+                    i.putExtra(Resultados.EXTRA_MESSAGE,res);
+                    startActivity(i);
+                }
+
+                if(seconds == 0){
+                    timeView.setText(time);
+                    handler.postDelayed(this,10000);
+                }
+
+                if(running)
+                    seconds --;
+            }
+        });
+    }
+
+
 }

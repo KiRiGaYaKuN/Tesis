@@ -5,12 +5,16 @@
       <map>
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/drawable/custom_button.xml" value="0.26" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/drawable/style_borde.xml" value="0.3545" />
-        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_ejercicio1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_cual_nota.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_ejercicio1.xml" value="0.25" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_ejercicio2.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_ejercicio21.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_ingresa_nota.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_main.xml" value="0.3292572463768116" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_menu_ejercicio.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_reproductor.xml" value="0.253125" />
-        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_scann_nfc.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_resultados.xml" value="0.2390625" />
+        <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_scann_nfc.xml" value="0.25287356321839083" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/layout/activity_tutorial.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Kirito/Documents/proyectos android/Musican/app/src/main/res/xml/nfc_tech_filter.xml" value="0.26614583333333336" />
       </map>

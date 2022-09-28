@@ -20,6 +20,18 @@
         android:theme="@style/Theme.Musican"
         tools:targetApi="31">
         <activity
+            android:name=".CualNota"
+            android:exported="false" />
+        <activity
+            android:name=".Ejercicio21"
+            android:exported="false" />
+        <activity
+            android:name=".Resultados"
+            android:exported="false" />
+        <activity
+            android:name=".IngresaNota"
+            android:exported="false" />
+        <activity
             android:name=".Reproductor"
             android:exported="false" />
         <activity

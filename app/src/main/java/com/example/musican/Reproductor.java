@@ -36,19 +36,17 @@ public class Reproductor extends AppCompatActivity {
         play_pause = (ImageButton) findViewById(R.id.play);
         back = (ImageButton) findViewById(R.id.back);
         next = (ImageButton) findViewById(R.id.next);
-
         Intent intent=getIntent();
         String messagetext = intent.getStringExtra(EXTRA_MESSAGE);
-        messageview.setText("Reproduciendo " + messagetext);
+        String[] partes = messagetext.split(",");
+        messageview.setText("Reproduciendo " + partes[1]);
 
-        switch(messagetext) {
-            case "Nota Re":
-                vectormp[0] = MediaPlayer.create(this, R.raw.re);
-                vectormp[0].start();
+        switch(partes[0]) {
+            case "Nota":
+                notas(partes[1]);
                 break;
-            case "estrellita":
-                vectormp[0] = MediaPlayer.create(this, R.raw.estrellita);
-                vectormp[0].start();
+            case "Partitura":
+                partituras(partes[1]);
                 break;
             default:
                 messageview.setText("Pruebe otra tarjeta");
@@ -84,6 +82,38 @@ public class Reproductor extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    public void notas(String nota){
+
+        switch(nota) {
+            case "Do":
+//                vectormp[0] = MediaPlayer.create(this, R.raw.re);
+//                vectormp[0].start();
+                break;
+            case "Re":
+                vectormp[0] = MediaPlayer.create(this, R.raw.re);
+                vectormp[0].start();
+                break;
+        }
+
+    }
+
+    public void partituras(String cancion){
+
+        switch(cancion) {
+            case "Pailitos chinos":
+//                vectormp[0] = MediaPlayer.create(this, R.raw.re);
+//                vectormp[0].start();
+                break;
+            case "Estrellita":
+                vectormp[0] = MediaPlayer.create(this, R.raw.estrellita);
+                vectormp[0].start();
+                break;
+        }
     }
 
 }
+
